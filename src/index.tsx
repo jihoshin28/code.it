@@ -1,3 +1,4 @@
+import './app.css'
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import ReactDOM from 'react-dom';
@@ -8,7 +9,7 @@ import { store } from './state';
 const App = () => {
   return (
     <Provider store ={store}>
-      <div>
+      <div className = "app">
         <CellList/>
       </div>
     </Provider>
