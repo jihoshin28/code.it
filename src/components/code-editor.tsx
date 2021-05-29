@@ -37,7 +37,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     //set the formatted value back in the editor
     editorRef.current.setValue(formatted);
   };
-
+  console.log(initialValue)
   return (
     <div className = "editor-wrapper">
       {/* button for formatting */}

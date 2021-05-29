@@ -35,7 +35,8 @@ const reducer = producer((state: CellsState = initialState, action: Action) => {
                 return id === action.payload.id
             })
             const targetIndex = direction === 'up'? index -1 : index + 1;
-
+            console.log(direction, index, targetIndex)
+            
             if(targetIndex < 0 || targetIndex > state.order.length -1 ){
                 return state;
             }
