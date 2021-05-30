@@ -8,7 +8,6 @@ interface AddCellProps {
 
 const AddCell: React.FC<AddCellProps> = ({ forceVisible, nextCellId }) => {
   const { insertCellAfter } = useActions();
-
   return (
     <div className={`add-cell ${forceVisible && 'force-visible'}`}>
       <div className="add-buttons">
