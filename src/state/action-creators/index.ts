@@ -103,9 +103,9 @@ export const saveCells = () => {
     const {
       cells: { data, order },
     } = getState();
-    console.log(order)
+    
     const cells = order.map((id) => data[id]);
-    console.log(cells)
+
     try {
       await axios.post('/cells', { cells });
     } catch (err) {

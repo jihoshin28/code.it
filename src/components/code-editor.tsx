@@ -2,7 +2,10 @@ import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import { useRef } from 'react';
-import './code-editor.css'
+import './code-editor.css';
+import codeShift from 'jscodeshift';
+import Highlighter from 'monaco-jsx-highlighter';
+import './syntax.css'
 
 interface CodeEditorProps {
   initialValue: string;
@@ -19,6 +22,23 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
       let value = getValue();
       onChange(value);
     });
+
+    // editor tabs create two spaces 
+    MonacoEditor.getModel()?.updateOptions({tabSize: 2})
+
+    // use syntax highlighting with monaco-jsx-highlighter and jscodeshift settings
+    const highlighter = new Highlighter(
+      // @ts-ignore
+      window.monaco,
+      codeShift,
+      MonacoEditor 
+    );
+    highlighter.highLightOnDidChangeModelContent(
+      ()=> {},
+      ()=> {},
+      undefined,
+      ()=> {}
+    );
   };
 
   const onFormatClick = () => {
@@ -26,22 +46,29 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     const unformatted = editorRef.current.getModel().getValue();
 
     // format the value
-    const formatted = prettier.format(unformatted, {
-      parser: 'babel',
-      plugins: [parser],
-      useTabs: false,
-      semi: true,
-      singleQuote: true,
-    }).replace(/\n$/, '')
+    const formatted = prettier
+      .format(unformatted, {
+        parser: 'babel',
+        plugins: [parser],
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+      })
+      .replace(/\n$/, '');
 
     //set the formatted value back in the editor
     editorRef.current.setValue(formatted);
   };
 
   return (
-    <div className = "editor-wrapper">
+    <div className="editor-wrapper">
       {/* button for formatting */}
-      <button className = "button button-format is-primary is-small" onClick={onFormatClick}>Format</button>
+      <button
+        className="button button-format is-primary is-small"
+        onClick={onFormatClick}
+      >
+        Format
+      </button>
       {/* Monaco editor with options */}
       <MonacoEditor
         editorDidMount={onEditorDidMount}
