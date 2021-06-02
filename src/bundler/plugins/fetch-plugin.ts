@@ -18,7 +18,7 @@ export const fetchPlugin = (inputCode: string) => {
             });
 
             build.onLoad({filter: /.*/}, async (args: any) => {
-                console.log('I ran and got cached results')
+                // console.log('I ran and got cached results')
                 const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
             
                 if(cachedResult){

@@ -10,6 +10,7 @@ const App = () => {
   return (
     <Provider store ={store}>
       <div className = "app">
+        <h1>You deserve the glory, Jesus</h1>
         <CellList/>
       </div>
     </Provider>
